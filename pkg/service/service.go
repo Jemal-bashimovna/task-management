@@ -2,7 +2,8 @@ package service
 
 import "taskmanager/pkg/repository"
 
-type Tasks interface{}
+type Tasks interface {
+}
 
 type Service struct {
 	Tasks
