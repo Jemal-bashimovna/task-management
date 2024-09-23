@@ -10,16 +10,17 @@ import (
 
 	"github.com/joho/godotenv"
 	_ "github.com/lib/pq"
+	"github.com/sirupsen/logrus"
 	"github.com/spf13/viper"
 )
 
 func main() {
 	if err := initConfig(); err != nil {
-		log.Fatalf("error initializing configs: %s", err.Error())
+		logrus.Fatalf("error initializing configs: %s", err.Error())
 	}
 
 	if err := godotenv.Load(); err != nil {
-		log.Fatalf("error loading env variabler: %s", err.Error())
+		logrus.Fatalf("error loading env variabler: %s", err.Error())
 	}
 
 	db, err := repository.NewPostgres(repository.Config{
@@ -32,7 +33,7 @@ func main() {
 	})
 
 	if err != nil {
-		log.Fatalf("error connecting to database")
+		logrus.Fatalf("error connecting to database")
 	}
 
 	repos := repository.NewRepository(db)
