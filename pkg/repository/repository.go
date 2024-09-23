@@ -1,13 +1,21 @@
 package repository
 
-import "github.com/jmoiron/sqlx"
+import (
+	taskmanagement "taskmanager"
 
-type Tasks interface{}
+	"github.com/jmoiron/sqlx"
+)
+
+type Tasks interface {
+	CreateTask(task taskmanagement.Tasks) (int, error)
+}
 
 type Repository struct {
 	Tasks
 }
 
 func NewRepository(db *sqlx.DB) *Repository {
-	return &Repository{}
+	return &Repository{
+		Tasks: NewTaskPostgres(db),
+	}
 }

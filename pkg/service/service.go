@@ -1,8 +1,12 @@
 package service
 
-import "taskmanager/pkg/repository"
+import (
+	taskmanagement "taskmanager"
+	"taskmanager/pkg/repository"
+)
 
 type Tasks interface {
+	CreateTask(task taskmanagement.Tasks) (int, error)
 }
 
 type Service struct {
@@ -10,5 +14,7 @@ type Service struct {
 }
 
 func NewService(repo *repository.Repository) *Service {
-	return &Service{}
+	return &Service{
+		Tasks: NewTaskService(repo.Tasks),
+	}
 }
