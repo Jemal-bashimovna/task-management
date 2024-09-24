@@ -1,10 +1,10 @@
 package taskmanagement
 
 type Tasks struct {
-	Id          int    `json:"id"`
-	Title       string `json:"title"`
-	Description string `json:"description"`
-	Status      string `json:"status"`
-	Created     string `json:"created_at"`
-	Updated     string `json:"updated_at"`
+	Id          int    `json:"id" db:"id"`
+	Title       string `json:"title" binding:"required" db:"title"`
+	Description string `json:"description"  db:"description"`
+	Status      string `json:"status" db:"status"`
+	Created     string `json:"created_at" db:"created_at"`
+	Updated     string `json:"updated_at" db:"updated_at"`
 }
