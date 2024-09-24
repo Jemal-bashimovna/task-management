@@ -7,6 +7,7 @@ import (
 
 type Tasks interface {
 	CreateTask(task taskmanagement.Tasks) (int, error)
+	GetTasks() ([]taskmanagement.Tasks, error)
 }
 
 type Service struct {

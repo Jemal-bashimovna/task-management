@@ -16,3 +16,6 @@ func NewTaskService(repo repository.Tasks) *TaskService {
 func (s *TaskService) CreateTask(task taskmanagement.Tasks) (int, error) {
 	return s.repo.CreateTask(task)
 }
+func (s *TaskService) GetTasks() ([]taskmanagement.Tasks, error) {
+	return s.repo.GetTasks()
+}
