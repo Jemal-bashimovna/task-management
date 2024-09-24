@@ -2,6 +2,7 @@ package handler
 
 import (
 	"net/http"
+	"strconv"
 	taskmanagement "taskmanager"
 
 	"github.com/gin-gonic/gin"
@@ -41,5 +42,18 @@ func (h *Handler) updateTask(ctx *gin.Context) {
 
 }
 func (h *Handler) deleteTask(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		NewError(ctx, http.StatusBadRequest, "Task not found")
+		return
+	}
 
+	err = h.services.Tasks.DeleteTask(id)
+	if err != nil {
+		NewError(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+	ctx.JSON(http.StatusOK, map[string]interface{}{
+		"status": "ok",
+	})
 }

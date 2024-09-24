@@ -9,6 +9,7 @@ import (
 type Tasks interface {
 	CreateTask(task taskmanagement.Tasks) (int, error)
 	GetTasks() ([]taskmanagement.Tasks, error)
+	DeleteTask(id int) error
 }
 
 type Repository struct {
