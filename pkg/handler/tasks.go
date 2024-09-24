@@ -14,7 +14,16 @@ func (h *Handler) createTask(ctx *gin.Context) {
 		NewError(ctx, http.StatusBadRequest, err.Error())
 		return
 	}
-	h.services.CreateTask(task)
+	
+	id, err := h.services.Tasks.CreateTask(task)
+	if err != nil {
+		NewError(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+
+	ctx.JSON(http.StatusOK, map[string]interface{}{
+		"id": id,
+	})
 }
 func (h *Handler) getTasks(ctx *gin.Context) {
 

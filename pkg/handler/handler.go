@@ -15,12 +15,13 @@ func NewHandler(services *service.Service) *Handler {
 }
 
 func (h *Handler) InitRoutes() *gin.Engine {
+
 	router := gin.New()
 
-	tasks := router.Group("tasks")
+	tasks := router.Group("/tasks")
 	{
-		tasks.POST("/", h.createTask)
-		tasks.GET("/", h.getTasks)
+		tasks.POST("", h.createTask)
+		tasks.GET("", h.getTasks)
 		tasks.PUT("/:id", h.updateTask)
 		tasks.DELETE("/:id", h.deleteTask)
 	}
