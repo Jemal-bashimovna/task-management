@@ -9,6 +9,7 @@ type Tasks interface {
 	CreateTask(task taskmanagement.Tasks) (int, error)
 	GetTasks() ([]taskmanagement.Tasks, error)
 	DeleteTask(id int) error
+	UpdateTask(id int, task taskmanagement.UpdateTaskInput) error
 }
 
 type Service struct {

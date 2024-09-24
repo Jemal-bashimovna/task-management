@@ -39,6 +39,26 @@ func (h *Handler) getTasks(ctx *gin.Context) {
 	})
 }
 func (h *Handler) updateTask(ctx *gin.Context) {
+	id, err := strconv.Atoi(ctx.Param("id"))
+	if err != nil {
+		NewError(ctx, http.StatusBadRequest, "Task not found")
+		return
+	}
+
+	var task taskmanagement.UpdateTaskInput
+	if err := ctx.BindJSON(&task); err != nil {
+		NewError(ctx, http.StatusBadRequest, err.Error())
+		return
+	}
+
+	err = h.services.UpdateTask(id, task)
+	if err != nil {
+		NewError(ctx, http.StatusInternalServerError, err.Error())
+		return
+	}
+	ctx.JSON(http.StatusOK, map[string]interface{}{
+		"status": "task updated",
+	})
 
 }
 func (h *Handler) deleteTask(ctx *gin.Context) {
@@ -54,6 +74,6 @@ func (h *Handler) deleteTask(ctx *gin.Context) {
 		return
 	}
 	ctx.JSON(http.StatusOK, map[string]interface{}{
-		"status": "ok",
+		"status": "task deleted",
 	})
 }

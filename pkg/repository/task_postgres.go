@@ -3,6 +3,7 @@ package repository
 import (
 	"fmt"
 	"log"
+	"strings"
 	taskmanagement "taskmanager"
 
 	"github.com/jmoiron/sqlx"
@@ -48,6 +49,41 @@ func (r *TaskPostgres) GetTasks() ([]taskmanagement.Tasks, error) {
 func (r *TaskPostgres) DeleteTask(id int) error {
 	query := fmt.Sprintf("DELETE FROM %s WHERE id=$1", tasksTable)
 	_, err := r.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
+func (r *TaskPostgres) UpdateTask(id int, task taskmanagement.UpdateTaskInput) error {
+
+	setValue := make([]string, 0)
+	args := make([]interface{}, 0)
+	argId := 1
+
+	if task.Title != nil {
+		setValue = append(setValue, fmt.Sprintf("title=$%d", argId))
+		args = append(args, *task.Title)
+		argId++
+	}
+
+	if task.Description != nil {
+		setValue = append(setValue, fmt.Sprintf("description=$%d", argId))
+		args = append(args, *task.Description)
+		argId++
+	}
+
+	if task.Status != nil {
+		setValue = append(setValue, fmt.Sprintf("status=$%d", argId))
+		args = append(args, *task.Status)
+		argId++
+	}
+
+	set := strings.Join(setValue, ",")
+	args = append(args, id)
+	query := fmt.Sprintf("UPDATE %s SET %s WHERE id=$%d", tasksTable, set, argId)
+	_, err := r.db.Exec(query, args...)
 	if err != nil {
 		return err
 	}
