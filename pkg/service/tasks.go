@@ -19,3 +19,7 @@ func (s *TaskService) CreateTask(task taskmanagement.Tasks) (int, error) {
 func (s *TaskService) GetTasks() ([]taskmanagement.Tasks, error) {
 	return s.repo.GetTasks()
 }
+
+func (s *TaskService) DeleteTask(id int) error {
+	return s.repo.DeleteTask(id)
+}

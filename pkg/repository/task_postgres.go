@@ -44,3 +44,13 @@ func (r *TaskPostgres) GetTasks() ([]taskmanagement.Tasks, error) {
 
 	return tasks, nil
 }
+
+func (r *TaskPostgres) DeleteTask(id int) error {
+	query := fmt.Sprintf("DELETE FROM %s WHERE id=$1", tasksTable)
+	_, err := r.db.Exec(query, id)
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
