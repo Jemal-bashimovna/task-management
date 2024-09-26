@@ -28,6 +28,7 @@ func (h *Handler) createTask(ctx *gin.Context) {
 }
 
 func (h *Handler) getTasks(ctx *gin.Context) {
+
 	tasks, err := h.services.Tasks.GetTasks()
 	if err != nil {
 		NewError(ctx, http.StatusInternalServerError, err.Error())

@@ -34,6 +34,7 @@ func (r *TaskPostgres) CreateTask(task taskmanagement.Tasks) (int, error) {
 }
 
 func (r *TaskPostgres) GetTasks() ([]taskmanagement.Tasks, error) {
+	
 	var tasks []taskmanagement.Tasks
 
 	query := fmt.Sprintf("SELECT ts.id, ts.title, ts.description, ts.status, ts.created_at, ts.updated_at FROM %s ts", tasksTable)
